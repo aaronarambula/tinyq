@@ -16,7 +16,7 @@ $ cargo run
 tinyq > set name aaron
 tinyq > get name
 aaron
-tinyq > ^C
+tinyq > exit
 
 $ cargo run
 tinyq > get name
@@ -59,6 +59,6 @@ This is a learning project, not production software. Known rough edges:
 - [ ] `delete` via tombstone markers
 - [ ] Multi-word values
 - [ ] Log compaction
-- [ ] `exit` command
+- [X] `exit` command
 
 Written by Claude
