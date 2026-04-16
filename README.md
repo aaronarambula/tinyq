@@ -61,4 +61,4 @@ This is a learning project, not production software. Known rough edges:
 - [ ] Log compaction
 - [X] `exit` command
 
-Written by Claude
+README.md written by Claude
