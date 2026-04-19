@@ -10,6 +10,8 @@ fn main() {
     let mut input = String::new();
     let mut db: HashMap<String, String> = HashMap::new();
 
+    let _ = std::fs::remove_file("db.txt.tmp");
+
     if let Ok(file) = File::open("db.txt") {
         let reader = BufReader::new(file);
         for line in reader.lines() {
@@ -83,6 +85,25 @@ fn main() {
                     .unwrap();
                 writeln!(file, "D {}", key).unwrap();
                 db.remove(&key);
+            }
+            "compact" => {
+                let tmp_path = "db.txt.tmp";
+                let mut tmp_file = OpenOptions::new()
+                    .create(true)
+                    .write(true)
+                    .truncate(true)
+                    .open(tmp_path)
+                    .unwrap();
+
+                for (key, value) in &db {
+                    writeln!(tmp_file, "S {} {}", key, value).unwrap();
+                }
+                tmp_file.sync_all().unwrap();
+                drop(tmp_file);
+
+                std::fs::rename(tmp_path, "db.txt").unwrap();
+
+                println!("Compacted: {} live keys", db.len());
             }
 
             "exit" => break,
